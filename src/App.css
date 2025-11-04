@@ -1,38 +1,32 @@
-.App {
-  text-align: center;
+:root {
+  --card: #ffffff; --bg: #f5f7fb; --text: #1f2937; --muted: #6b7280; --border: #e5e7eb;
 }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, Arial; }
+.App { max-width: 920px; margin: 24px auto; padding: 0 16px; }
+h1 { margin: 8px 0 20px; }
+.container { display: grid; gap: 16px; }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.task-form { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.task-form .row { display: grid; grid-template-columns: 1fr 220px; gap: 12px; margin-bottom: 12px; }
+.task-form input[type="text"], .task-form input[type="datetime-local"], .task-form textarea, .task-form select {
+  width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px;
 }
+.task-form textarea { resize: vertical; }
+.task-form .color-picker { display: flex; align-items: center; gap: 8px; }
+.task-form button { padding: 10px 14px; border: none; border-radius: 8px; background: #2563eb; color: white; cursor: pointer; }
+.task-form button:hover { opacity: .95; }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+.task-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.task-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px; display: grid; gap: 10px; }
+.title-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.title-row h3 { margin: 0; }
+.badge { color: white; padding: 4px 8px; font-size: 12px; border-radius: 999px; }
+.desc { margin: 6px 0 2px; color: var(--text); }
+.meta { color: var(--muted); display: flex; gap: 16px; font-size: 14px; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.actions button { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; background: #f3f4f6; }
+.actions button.ghost { background: #eef2ff; }
+.actions button.danger { background: #fee2e2; border-color: #fecaca; }
+.actions button:hover { filter: brightness(0.98); }
+.empty { color: var(--muted); text-align: center; margin: 24px 0; }
