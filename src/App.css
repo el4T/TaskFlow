@@ -1,76 +1,556 @@
-:root {
-  --card-dark: #1f2937;
-  --bg-dark: #111827;
-  --text-dark: #f3f4f6;
-  --muted-dark: #9ca3af;
-  --border-dark: #374151;
-  --body-dark: #374151;
+/* LIGHT MODE */
 
-  --card-light: #ffffff;
-  --bg-light: #f5f7fb;
-  --text-light: #1f2937;
-  --muted-light: #6b7280;
-  --border-light: #e5e7eb;
-  --body-light: #6b7280;
+body.light {
+  background-color: #DFD0B8; /* fundal general */
+  color: #222831; /* text principal */
 }
 
-/* RESET */
-* { box-sizing:border-box; margin:0; padding:0; font-family: system-ui, Arial; }
-body { margin:0; }
-
-/* THEME CLASSES */
-.App.dark { --card: var(--card-dark); --bg: var(--bg-dark); --text: var(--text-dark); --muted: var(--muted-dark); --border: var(--border-dark); --body: var(var(--body-dark))}
-.App.light { --card: var(--card-light); --bg: var(--bg-light); --text: var(--text-light); --muted: var(--muted-light); --border: var(--border-light); --body: var(--body-light);}
-
-/* APP LAYOUT */
-.App { max-width: 920px; margin: 24px auto; padding: 0 16px; background: var(--bg); color: var(--text); transition: all 0.3s ease; }
-h1 { margin: 8px 0 20px; }
-
-/* NAV */
-.nav { display:flex; justify-content:center; gap:10px; margin-bottom:20px; }
-.nav button { padding:8px 14px; border-radius:6px; border:none; background:#ddd; cursor:pointer; transition:0.3s; }
-.App.dark .nav button { background:#374151; color:#f3f4f6; }
-.App.light .nav button { background:#ddd; color:#1f2937; }
-.nav button:hover { filter: brightness(0.9); }
-
-/* THEME BUTTON */
-.theme_button { position:absolute; top:1rem; right:1rem; padding:0.5rem 1rem; border-radius:12px; border:none; cursor:pointer; font-weight:600; transition:0.3s; }
-.App.dark .theme_button { background:#374151; color:#f3f4f6; }
-.App.light .theme_button { background:#ddd; color:#1f2937; }
-
-/* CONTAINER */
-.container { display:grid; gap:16px; }
-
-/* TASK FORM */
-.task-form { background: var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; display:grid; gap:12px; transition: all 0.3s ease; }
-.task-form .row { display:grid; grid-template-columns: 1fr 220px; gap:12px; margin-bottom:12px; }
-.task-form input[type="text"], .task-form input[type="datetime-local"], .task-form textarea, .task-form select {
-  width:100%; padding:10px; border:1px solid var(--border); border-radius:8px; font-size:14px; background: var(--bg); color: var(--text);
+body.light .task-form,
+body.light .task-item,
+body.light .calendar-view {
+  background-color: #FFFFFF; /* carduri albe */
+  color: #222831;
+  border-color: #948979; /* accent borduri */
 }
-.task-form textarea { resize: vertical; }
-.task-form button { padding:10px 14px; border:none; border-radius:8px; background:#2563eb; color:white; cursor:pointer; }
 
-/* TASK LIST */
-.task-list { list-style:none; padding:0; margin:0; display:grid; gap:12px; }
-.task-item { background: var(--card); border:1px solid var(--border); border-radius:12px; padding:14px; display:grid; gap:10px; transition: all 0.3s ease; }
-.task-item .title-row { display:flex; justify-content:space-between; align-items:center; }
-.task-item .desc { color: var(--text); margin:6px 0 2px; }
-.task-item .meta { color: var(--muted); display:flex; gap:16px; font-size:14px; }
-.actions button { padding:8px 12px; border-radius:8px; border:1px solid var(--border); cursor:pointer; background:#f3f4f6; }
-.actions button.ghost { background:#eef2ff; }
-.actions button.danger { background:#fee2e2; border-color:#fecaca; }
-.actions button:hover { filter: brightness(0.95); }
+body.light input,
+body.light textarea,
+body.light select {
+  background: #FFFFFF;
+  color: #222831;
+  border: 1px solid #948979;
+}
 
-/* BADGES */
-.badge { color:white; padding:4px 8px; font-size:12px; border-radius:999px; }
-.badge.Completed { background:#2e7d32; }
-.badge.Canceled { background:#616161; }
-.badge.Overdue { background:#c62828; }
-.badge.Upcoming { background:#1565c0; }
+body.light button {
+  background: #393E46; /* butoane principale dark accent */
+  color: #DFD0B8;
+}
 
-/* EMPTY MESSAGE */
-.empty { color: var(--muted); text-align:center; margin:24px 0; }
+body.light button.ghost {
+  background: #F5F5F5; /* ghost buttons mai deschise */
+  color: #222831;
+}
 
-/* CALENDAR */
-.react-calendar { border-radius:12px; border:1px solid var(--border); padding:1rem; background: var(--card); color: var(--text); transition:0.3s; }
+body.light button.danger {
+  background: #948979;
+}
 
+body.light .meta,
+body.light .desc {
+  color: #948979;
+}
+
+
+/* DARK MODE */
+body.dark {
+  background-color: #222831;
+  color: #DFD0B8;
+}
+
+body.dark .task-form,
+body.dark .task-item,
+body.dark .calendar-view {
+  background-color: #393E46;
+  color: #DFD0B8;
+  border-color: #948979;
+}
+
+body.dark input,
+body.dark textarea,
+body.dark select {
+  background: #222831;
+  color: #DFD0B8;
+  border: 1px solid #948979;
+}
+
+body.dark button {
+  background: #393E46;
+  color: #DFD0B8;
+}
+
+body.dark button.ghost {
+  background: #222831;
+  color: #DFD0B8;
+}
+
+body.dark button.danger {
+  background: #948979;
+}
+
+body.dark .meta,
+body.dark .desc {
+  color: #948979;
+}
+
+
+/* ========================================
+   TOP BAR + NEW THEME BUTTON
+======================================== */
+
+/* TOP BAR STILIZAT */
+.top-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* butoanele rămân la margini */
+  height: 60px;
+  padding: 0 20px;
+  background: #DFD0B8; /* light mode */
+  color: #222831;       /* text implicit (restul) */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  margin-bottom: 20px;
+}
+
+.top-bar h1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 34px;
+  font-weight: 700;
+  color: #393E46; /* text Taskflow light mode */
+}
+
+/* dark mode */
+body.dark .top-bar {
+  background: #222831;
+  color: #DFD0B8; /* text implicit (restul) */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+
+body.dark .top-bar h1 {
+  color: #DFD0B8; /* Taskflow dark mode */
+}
+.top-logo {
+  height: 80px; /* sau cât vrei să fie */
+  width: auto;
+  margin-right: 15px; /* spațiu între logo și margine / text */
+}
+
+
+
+
+.theme-toggle {
+  background: #ffffff;
+  border: 2px solid #d1d5db;
+  padding: 8px 14px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background: #f0f0f0;
+  transform: scale(1.05);
+}
+
+body.dark .theme-toggle {
+  background: #30363d;
+  border-color: #555;
+  color: white;
+}
+
+body.dark .theme-toggle:hover {
+  background: #3d444c;
+}
+
+
+
+
+/* =============================
+   Global & Layout
+============================= */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f6fa;
+  color: #222;
+}
+
+.App {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: #0b1f49;
+  margin-bottom: 30px;
+}
+
+/* =============================
+   Toggle: List / Calendar
+============================= */
+
+.view-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.view-toggle button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #f3f4f6;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.view-toggle button:hover {
+  background: #e5e7eb;
+}
+
+.view-toggle button.active {
+  background: #2563eb;
+  color: white;
+  border-color: #1d4ed8;
+}
+
+/* =============================
+   Task Form (Add / Edit)
+============================= */
+
+.task-form {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.task-form .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.task-form input[type="text"],
+.task-form input[type="datetime-local"],
+.task-form textarea,
+.task-form select {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.task-form textarea {
+  resize: none;
+}
+
+.task-form input[type="color"] {
+  height: 35px;
+  width: 50px;
+  border: none;
+  cursor: pointer;
+}
+
+.task-form button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.task-form button:hover {
+  background: #1d4ed8;
+}
+
+.task-form button.ghost {
+  background: #e5e7eb;
+  color: #333;
+}
+
+.task-form button.ghost:hover {
+  background: #d1d5db;
+}
+
+/* =============================
+   Task List & Items
+============================= */
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-item {
+  background: #fff;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  padding: 15px 20px;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  border-left: 8px solid #2563eb;
+  transition: transform 0.1s ease-in-out;
+}
+
+.task-item:hover {
+  transform: translateY(-2px);
+}
+
+.task-main {
+  margin-bottom: 10px;
+}
+
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-row h3 {
+  margin: 0;
+  color: #0b1f49;
+}
+
+.badge {
+  padding: 4px 10px;
+  color: white;
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+.desc {
+  color: #555;
+  margin: 6px 0;
+}
+.task-item .desc {
+  display: block;
+  width: 100%;
+}
+
+
+.meta {
+  font-size: 13px;
+  color: #666;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.actions button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.actions button:hover {
+  opacity: 0.9;
+}
+
+.actions button.ghost {
+  background: #e0e0e0;
+}
+
+.actions button.danger {
+  background: #f87171;
+  color: white;
+}
+
+.actions button.danger:hover {
+  background: #ef4444;
+}
+
+/* =============================
+   Empty List Message
+============================= */
+
+.empty {
+  color: #666;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+/* =============================
+   Calendar View
+============================= */
+
+.calendar-view {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.calendar-view h2 {
+  margin-bottom: 15px;
+}
+
+.calendar-container {
+  display: flex;
+  justify-content: center;
+}
+
+.task-list-day {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.task-list-day ul {
+  list-style: none;
+  padding: 0;
+}
+
+.task-list-day li {
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border-left: 6px solid #2563eb;
+}
+
+.task-list-day li strong {
+  color: #111827;
+}
+
+.task-list-day li small {
+  color: #555;
+}
+.task-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #2563eb;
+  margin: 2px auto 0;
+}
+.filters {
+  display: flex;
+  gap: 12px;
+  margin: 20px auto;
+  justify-content: center;
+}
+
+.filters select {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 14px;
+}
+
+.auth-container {
+  max-width: 350px;
+  margin: 80px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.auth-container input {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+.auth-container button {
+  padding: 10px 18px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.auth-container .link {
+  background: none;
+  color: #2563eb;
+  cursor: pointer;
+  border: none;
+}
+.logout-btn {
+  margin-left: 10px;
+  background: #ef4444;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/*sidebar*/
+.menu-btn {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px 50px;
+  background: var(--top-bar-bg, #f0f0f0);
+}
+
+/* pt afisare parola*/
+.password-field {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.password-field input {
+  width: 100%;
+  padding: 10px 45px 10px 12px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  background: white;
+  color: #222;
+}
+
+body.dark .password-field input {
+  background: #0d1117;
+  color: #e6edf3;
+  border: 1px solid #30363d;
+}
+
+.toggle-pass {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 6px;
+  transition: color 0.2s ease;
+}
+
+body.dark .toggle-pass {
+  color: #9da5b4;
+}
+
+.toggle-pass:hover {
+  color: #000;
+}
+
+body.dark .toggle-pass:hover {
+  color: #fff;
+}

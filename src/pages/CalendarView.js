@@ -1,75 +1,78 @@
+
 // src/pages/CalendarView.js
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import TaskItem from "../components/TaskItem";
 
-export default function CalendarView({ tasks, onUpdate, onDelete }) {
+export default function CalendarView({ tasks }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  // verifică dacă există taskuri pe o anumită dată
-  const hasTaskOnDate = (date) => {
-    return tasks.some((task) => {
-      if (!task.deadline) return false;
-      const taskDate = new Date(task.deadline);
-      return (
-        taskDate.getDate() === date.getDate() &&
-        taskDate.getMonth() === date.getMonth() &&
-        taskDate.getFullYear() === date.getFullYear()
-      );
-    });
-  };
+  // funcție care transformă data în cheie (ex: "Mon Nov 11 2025")
+  const dateKey = (d) => new Date(d).toDateString();
 
-  // taskurile pentru ziua selectată
-  const filteredTasks = tasks.filter((task) => {
-    if (!task.deadline) return false;
-    const taskDate = new Date(task.deadline);
-    return (
-      taskDate.getDate() === selectedDate.getDate() &&
-      taskDate.getMonth() === selectedDate.getMonth() &&
-      taskDate.getFullYear() === selectedDate.getFullYear()
-    );
+  // pre-calculăm ce zile au task-uri (pentru buline)
+  const daysWithTasks = useMemo(() => {
+    const set = new Set();
+    tasks.forEach((t) => {
+      if (t.deadline) {
+        set.add(dateKey(t.deadline));
+      }
+    });
+    return set;
+  }, [tasks]);
+
+  // task-urile pentru ziua selectată
+  const tasksForDay = tasks.filter((t) => {
+    if (!t.deadline) return false;
+    return dateKey(t.deadline) === dateKey(selectedDate);
   });
 
   return (
-    <div className="calendar-page">
-      <h2>Calendar View</h2>
+    <div className="calendar-view">
+      <h2>📅 Task Calendar</h2>
 
-      <Calendar
-        value={selectedDate}
-        onClickDay={setSelectedDate}
-        tileContent={({ date, view }) =>
-          view === "month" && hasTaskOnDate(date) ? (
-            <div
-              style={{
-                height: "6px",
-                width: "6px",
-                backgroundColor: "#3f51b5",
-                borderRadius: "50%",
-                margin: "0 auto",
-                marginTop: "2px",
-              }}
-            ></div>
-          ) : null
-        }
-      />
+      <div className="calendar-container">
+        <Calendar
+          onChange={setSelectedDate}
+          value={selectedDate}
+          // aici adăugăm bulina
+          tileContent={({ date, view }) => {
+            if (view !== "month") return null; // doar în view lunar
+            if (daysWithTasks.has(dateKey(date))) {
+              return <div className="task-dot" />;
+            }
+            return null;
+          }}
+        />
+      </div>
 
-      <h3>Tasks on {selectedDate.toLocaleDateString()}:</h3>
-
-      {filteredTasks.length === 0 ? (
-        <p className="empty">No tasks on this date.</p>
-      ) : (
-        <ul className="task-list">
-          {filteredTasks.map((t) => (
-            <TaskItem
-              key={t.id}
-              task={t}
-              onDelete={onDelete}
-              onUpdate={onUpdate}
-            />
-          ))}
-        </ul>
-      )}
+      <div className="task-list-day">
+        <h3>Tasks for {selectedDate.toDateString()}</h3>
+        {tasksForDay.length === 0 ? (
+          <p>No tasks for this date.</p>
+        ) : (
+          <ul>
+            {tasksForDay.map((t) => (
+              <li
+                key={t.id}
+                style={{
+                  borderLeft: '6px solid ${t.color}',
+                  marginBottom: 8,
+                  paddingLeft: 8,
+                }}
+              >
+                <strong>{t.title}</strong> — {t.priority} Priority
+                {t.description && (
+                  <>
+                    <br />
+                    <small>{t.description}</small>
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

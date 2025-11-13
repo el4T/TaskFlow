@@ -1,0 +1,132 @@
+/* =============================
+   Sidebar Overlay
+============================= */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45); /* poate rămâne pentru ambele moduri */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.sidebar-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* =============================
+   Sidebar Container
+============================= */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100vh;
+  background: #FFFFFF; /* light mode implicit */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.35s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  z-index: 11;
+  overflow-y: auto;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+/* =============================
+   Dark Mode Sidebar
+============================= */
+.sidebar.dark {
+  background: #222831; /* fundal dark */
+  color: #DFD0B8;      /* text light */
+}
+
+/* =============================
+   Sidebar Header
+============================= */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* =============================
+   Sidebar Buttons
+============================= */
+.sidebar-content {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Light Mode Buttons */
+.sidebar-btn {
+  background: #393E46; /* accent în paleta ta */
+  color: #DFD0B8;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.2s;
+}
+
+.sidebar-btn:hover {
+  background: #222831; /* hover dark accent */
+}
+
+.sidebar-btn.logout {
+  background: #948979; /* accent pentru logout */
+}
+
+.sidebar-btn.logout:hover {
+  background: #393E46;
+}
+
+/* Dark Mode Buttons Override */
+.sidebar.dark .sidebar-btn {
+  background: #393E46;
+  color: #DFD0B8;
+}
+
+.sidebar.dark .sidebar-btn:hover {
+  background: #948979;
+}
+
+.sidebar.dark .sidebar-btn.logout {
+  background: #DA3633; /* păstrăm roșu pentru logout în dark */
+}
+
+.sidebar.dark .sidebar-btn.logout:hover {
+  background: #C0392B;
+}
+
+/* =============================
+   Responsive
+============================= */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    left: -100%;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+}
