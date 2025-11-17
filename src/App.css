@@ -506,22 +506,40 @@ h1 {
 }
 
 /* pt afisare parola*/
+
 .password-field {
   position: relative;
   width: 100%;
   margin-bottom: 15px;
+  display: flex;
+  align-items: center;
 }
 
 .password-field input {
   width: 100%;
-  padding: 10px 45px 10px 12px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
+  padding: 16px 70px 16px 12px; /* sau ce înălțime vrei */
+  border: 1px solid #948979;
   border-radius: 6px;
-  font-size: 15px;
-  background: white;
-  color: #222;
+  font-size: 16px;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  color: #222831;
 }
+
+.password-field button {
+  position: absolute;
+  right: 8px;
+  /* Șterge top și transform */
+  background: #f0f0f0;
+  border: 1px solid #948979;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #393E46;
+  height: auto; /* lasă butonul să-și determine propria înălțime */
+}
+
 
 body.dark .password-field input {
   background: #0d1117;
@@ -529,28 +547,15 @@ body.dark .password-field input {
   border: 1px solid #30363d;
 }
 
-.toggle-pass {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: #555;
-  font-size: 13px;
-  cursor: pointer;
-  padding: 4px 6px;
-  transition: color 0.2s ease;
+
+.toggle-pass:hover {
+  color: #2563eb; /* hover vizibil, dar subtil */
 }
 
 body.dark .toggle-pass {
   color: #9da5b4;
 }
 
-.toggle-pass:hover {
-  color: #000;
-}
-
 body.dark .toggle-pass:hover {
-  color: #fff;
+  color: #60a5fa; /* hover vizibil în dark mode */
 }
