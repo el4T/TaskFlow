@@ -1,6 +1,6 @@
 // src/pages/Register.js
 import React, { useState, useMemo } from "react";
-import { loadUsers, saveUsers } from "../utils/auth";
+import { registerUser } from "../utils/auth";
 
 const PASSWORD_REGEX =
   /^(?=.{12,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:'"\\|,.<>\/?`~]).*$/;
@@ -10,6 +10,8 @@ export default function Register({ onSwitchToLogin }) {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -24,43 +26,43 @@ export default function Register({ onSwitchToLogin }) {
 
   const isPasswordValid = PASSWORD_REGEX.test(password) && checks.match;
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     if (!email.includes("@") || email.trim().length < 3) {
       setError("Introduceți un email valid.");
+      setLoading(false);
       return;
     }
 
     if (!PASSWORD_REGEX.test(password)) {
-      setError(
-        "Parola nu respectă cerințele. Verificați checklist-ul de mai jos."
-      );
+      setError("Parola nu respectă cerințele. Verificați checklist-ul de mai jos.");
+      setLoading(false);
       return;
     }
 
     if (password !== confirm) {
       setError("Parola și confirmarea nu coincid.");
+      setLoading(false);
       return;
     }
 
-    const users = loadUsers();
-
-    if (users.some((u) => u.email === email)) {
-      setError("Email deja înregistrat!");
-      return;
+    // MODIFICARE AICI: Folosim Firebase Authentication
+    const result = await registerUser(email, password);
+    
+    if (result.success) {
+      alert("Cont creat cu succes!");
+      setEmail("");
+      setPassword("");
+      setConfirm("");
+      onSwitchToLogin();
+    } else {
+      setError(result.error);
     }
-
-    const newUser = { email, password };
-    users.push(newUser);
-    saveUsers(users);
-
-    alert("Cont creat cu succes!");
-    setEmail("");
-    setPassword("");
-    setConfirm("");
-    onSwitchToLogin();
+    
+    setLoading(false);
   };
 
   return (
@@ -76,7 +78,6 @@ export default function Register({ onSwitchToLogin }) {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        {/* PAROLĂ */}
         <div className="password-field">
           <input
             type={showPassword ? "text" : "password"}
@@ -94,7 +95,6 @@ export default function Register({ onSwitchToLogin }) {
           </button>
         </div>
 
-        {/* CONFIRMĂ PAROLĂ */}
         <div className="password-field">
           <input
             type={showConfirm ? "text" : "password"}
@@ -118,8 +118,8 @@ export default function Register({ onSwitchToLogin }) {
 
         {error && <p style={{ color: "crimson" }}>{error}</p>}
 
-        <button type="submit" disabled={!isPasswordValid}>
-          Register
+        <button type="submit" disabled={!isPasswordValid || loading}>
+          {loading ? "Creating account..." : "Register"}
         </button>
       </form>
 
@@ -133,6 +133,7 @@ export default function Register({ onSwitchToLogin }) {
   );
 }
 
+// Componenta pentru checklist (rămâne la fel)
 function PasswordChecklist({ checks }) {
   const item = (ok, text) => (
     <div

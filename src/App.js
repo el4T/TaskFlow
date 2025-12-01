@@ -1,3 +1,4 @@
+// App.js - CU FIREBASE
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import Sidebar from "./components/Sidebar";
@@ -5,30 +6,77 @@ import Home from "./pages/Home";
 import CalendarView from "./pages/CalendarView";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { getLoggedUser, logoutUser } from "./utils/auth";
-import { loadTasks, saveTasks } from "./utils/storage";
+import { getCurrentUser, logoutUser } from "./utils/auth";
+import { subscribeToTasks, addTask, updateTask, deleteTask } from "./utils/storage";
 
 function App() {
-  const [tasks, setTasks] = useState(() => loadTasks());
+  const [tasks, setTasks] = useState([]);
   const [view, setView] = useState("home");
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const [user, setUser] = useState(getLoggedUser());
+  const [user, setUser] = useState(null);
   const [showRegister, setShowRegister] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => saveTasks(tasks), [tasks]);
+  // Verifică dacă user-ul este logat
+  useEffect(() => {
+    getCurrentUser().then((user) => {
+      setUser(user);
+      setLoading(false);
+    });
+  }, []);
+
+  // Ascultă pentru task-uri în timp real
+  useEffect(() => {
+    if (user) {
+      const unsubscribe = subscribeToTasks(user.uid, (newTasks) => {
+        setTasks(newTasks);
+      });
+      return () => unsubscribe();
+    } else {
+      setTasks([]);
+    }
+  }, [user]);
+
   useEffect(() => {
     document.body.className = theme;
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const addTask = (task) => setTasks((prev) => [task, ...prev]);
-  const deleteTask = (id) =>
-    setTasks((prev) => prev.filter((t) => t.id !== id));
-  const updateTask = (id, partial) =>
-    setTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, ...partial } : t))
-    );
+  const handleAddTask = async (task) => {
+    const result = await addTask(task, user.uid);
+    if (!result.success) {
+      alert("Error adding task: " + result.error);
+    }
+  };
+
+  const handleDeleteTask = async (id) => {
+    const result = await deleteTask(id);
+    if (!result.success) {
+      alert("Error deleting task: " + result.error);
+    }
+  };
+
+  const handleUpdateTask = async (id, partial) => {
+    const result = await updateTask(id, partial);
+    if (!result.success) {
+      alert("Error updating task: " + result.error);
+    }
+  };
+
+  const handleLogout = async () => {
+    const result = await logoutUser();
+    if (result.success) {
+      setUser(null);
+      setTasks([]);
+    } else {
+      alert("Error logging out: " + result.error);
+    }
+  };
+
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
 
   if (!user) {
     return showRegister ? (
@@ -49,14 +97,11 @@ function App() {
         darkMode={theme === "dark"}
         toggleDarkMode={() => setTheme(theme === "light" ? "dark" : "light")}
         user={user}
-        onLogout={() => {
-          logoutUser();
-          setUser(null);
-        }}
+        onLogout={handleLogout}
       />
 
       <div className="top-bar">
-        <img src="TaskFlowLogo.png" alt="Taskflow logo" class="top-logo"></img>
+        <img src="TaskFlowLogo.png" alt="Taskflow logo" className="top-logo" />
         <button className="menu-btn" onClick={() => setSidebarOpen(true)}>
           ☰
         </button>
@@ -81,9 +126,9 @@ function App() {
       {view === "home" ? (
         <Home
           tasks={tasks}
-          onAdd={addTask}
-          onDelete={deleteTask}
-          onUpdate={updateTask}
+          onAdd={handleAddTask}
+          onDelete={handleDeleteTask}
+          onUpdate={handleUpdateTask}
         />
       ) : (
         <CalendarView tasks={tasks} />
