@@ -1,16 +1,83 @@
-// src/utils/storage.js
-const STORAGE_KEY = "taskflow_tasks";
+// utils/storage.js - CU FIRESTORE (CORECTAT)
+import { 
+  collection, 
+  addDoc, 
+  updateDoc, 
+  deleteDoc, 
+  doc, 
+  query, 
+  where, 
+  getDocs,
+  onSnapshot
+} from 'firebase/firestore';
+import { db } from '../firebase/config';
 
-export function loadTasks() {
+// Încarcă task-urile pentru user-ul curent
+export async function loadTasks(userId) {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-  } catch {
+    const tasksRef = collection(db, 'tasks');
+    const q = query(tasksRef, where('userId', '==', userId));
+    const querySnapshot = await getDocs(q);
+    
+    const tasks = [];
+    querySnapshot.forEach((doc) => {
+      tasks.push({ id: doc.id, ...doc.data() });
+    });
+    
+    return tasks;
+  } catch (error) {
+    console.error("Error loading tasks:", error);
     return [];
   }
 }
 
-export function saveTasks(tasks) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+// Ascultă pentru schimbări în timp real
+export function subscribeToTasks(userId, callback) {
+  const tasksRef = collection(db, 'tasks');
+  const q = query(tasksRef, where('userId', '==', userId));
+  
+  return onSnapshot(q, (snapshot) => {
+    const tasks = [];
+    snapshot.forEach((doc) => {
+      tasks.push({ id: doc.id, ...doc.data() });
+    });
+    callback(tasks);
+  });
+}
+
+// Adaugă task nou
+export async function addTask(task, userId) {
+  try {
+    const docRef = await addDoc(collection(db, 'tasks'), {
+      ...task,
+      userId: userId,
+      createdAt: new Date().toISOString()
+    });
+    return { success: true, id: docRef.id };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+
+// Actualizează task
+export async function updateTask(taskId, updates) {
+  try {
+    const taskRef = doc(db, 'tasks', taskId);
+    await updateDoc(taskRef, updates);
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+
+// Șterge task
+export async function deleteTask(taskId) {
+  try {
+    await deleteDoc(doc(db, 'tasks', taskId));
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
 }
 
 export function generateId() {

@@ -1,66 +1,67 @@
-/* LIGHT MODE */
+/* !!!!!! LIGHT MODE !!!!!! */
 
 body.light {
-  background-color: #DFD0B8; /* fundal general */
-  color: #222831; /* text principal */
+  background-color: #c1e1c1; /* #DFD0B8;      /* culoarea de fundal a paginii în light mode */
+  color: #222831;     /* culoare text principal */
 }
 
 body.light .task-form,
 body.light .task-item,
 body.light .calendar-view {
-  background-color: #FFFFFF; /* carduri albe */
-  color: #222831;
-  border-color: #948979; /* accent borduri */
+  background-color: #FFFFFF;  /* cardurile (taskuri, formulare, calendar) devin albe */
+  color: #222831;             /* text închis */
+  border-color: #948979;      /* accent borduri */
 }
 
 body.light input,
 body.light textarea,
 body.light select {
-  background: #FFFFFF;
-  color: #222831;
-  border: 1px solid #948979;
+  background: #FFFFFF;                /* campuri deschise */
+  color: #222831;                     /* text închis */
+  border: 1px solid #948979;          /* bordură subtilă */
 }
 
 body.light button {
-  background: #393E46; /* butoane principale dark accent */
-  color: #DFD0B8;
+  background: #393E46;    /* butoane principale gri */
+  color: #DFD0B8;         /* text deschis */
 }
 
 body.light button.ghost {
-  background: #F5F5F5; /* ghost buttons mai deschise */
+  background: #F5F5F5;          /* ghost buttons deschise */
   color: #222831;
 }
 
 body.light button.danger {
-  background: #948979;
+  background: #948979;          /* buton pt delete */
 }
 
 body.light .meta,
 body.light .desc {
-  color: #948979;
+  color: #948979;               /* text secundar */
 }
 
 
-/* DARK MODE */
+/* !!!!!! DARK MODE !!!!!! */
+
 body.dark {
-  background-color: #222831;
-  color: #DFD0B8;
+  background-color: #222831;          /* fundal închis */
+  color: #DFD0B8;                     /* text deschis */
 }
 
 body.dark .task-form,
 body.dark .task-item,
 body.dark .calendar-view {
-  background-color: #393E46;
+  background-color: #393E46;        /* carduri gri */
   color: #DFD0B8;
-  border-color: #948979;
+  border-color: #948979;            /* accent borduri  */
 }
 
 body.dark input,
 body.dark textarea,
 body.dark select {
-  background: #222831;
-  color: #DFD0B8;
-  border: 1px solid #948979;
+  background: #222831;                  /* câmpuri închise */
+  color: #DFD0B8;                       /* text deschis */
+  border: 1px solid #948979;            /* accent borduri */
 }
 
 body.dark button {
@@ -83,53 +84,51 @@ body.dark .desc {
 }
 
 
-/* ========================================
-   TOP BAR + NEW THEME BUTTON
-======================================== */
+/* TOP BAR cu titlu si meniu */
 
-/* TOP BAR STILIZAT */
 .top-bar {
   position: relative;
-  display: flex;
+  display: flex;                    /* elementele sunt aranjate pe orizontală */
   align-items: center;
-  justify-content: space-between; /* butoanele rămân la margini */
+  justify-content: space-between;   /* logo stânga, meniu dreapta */
   height: 60px;
   padding: 0 20px;
-  background: #DFD0B8; /* light mode */
-  color: #222831;       /* text implicit (restul) */
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  margin-bottom: 20px;
+  background: #DFD0B8;            /* fundfal light mode */
+  color: #222831;                 /* text implicit */
+  border-radius: 12px;              /* colturi rotunjite */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);   /*umbra bara de sus */
+  margin-bottom: 20px;                        /* spatiu sub bara */
 }
 
 .top-bar h1 {
-  position: absolute;
+  position: absolute;                   /* centrare  */
   left: 50%;
   transform: translateX(-50%);
   margin: 0;
   font-size: 34px;
   font-weight: 700;
-  color: #393E46; /* text Taskflow light mode */
+  color: #393E46;                 /* text Taskflow in light mode */
 }
 
-/* dark mode */
+/* !!! dark mode pt top bar */
 body.dark .top-bar {
   background: #222831;
-  color: #DFD0B8; /* text implicit (restul) */
+  color: #DFD0B8; 
   box-shadow: 0 4px 8px rgba(0,0,0,0.25);
 }
 
 body.dark .top-bar h1 {
-  color: #DFD0B8; /* Taskflow dark mode */
+  color: #DFD0B8;                 /* text Taskflow in dark mode */
 }
+
+/* logo */
 .top-logo {
-  height: 80px; /* sau cât vrei să fie */
+  height: 80px; 
   width: auto;
-  margin-right: 15px; /* spațiu între logo și margine / text */
+  margin-right: 15px;       /* spațiu între logo și margine/text */
 }
 
-
-
+/* !!!!! Buton de schimbare a temei !!!!!! */
 
 .theme-toggle {
   background: #ffffff;
@@ -143,7 +142,7 @@ body.dark .top-bar h1 {
 
 .theme-toggle:hover {
   background: #f0f0f0;
-  transform: scale(1.05);
+  transform: scale(1.05);           /* mic efect de hover */
 }
 
 body.dark .theme-toggle {
@@ -156,23 +155,18 @@ body.dark .theme-toggle:hover {
   background: #3d444c;
 }
 
-
-
-
-/* =============================
-   Global & Layout
-============================= */
+/* Global (fonturi, layout) */
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;     /* font default */
   background-color: #f5f6fa;
   color: #222;
 }
 
 .App {
-  text-align: center;
-  max-width: 900px;
+  text-align: center;             /* text la centru */
+  max-width: 900px;               /* lățime maxim aplicație */
   margin: 0 auto;
   padding: 20px;
 }
@@ -182,14 +176,12 @@ h1 {
   margin-bottom: 30px;
 }
 
-/* =============================
-   Toggle: List / Calendar
-============================= */
+/* Toggle: List / Calendar view */
 
 .view-toggle {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 10px;                        /* spațiu între butoane */
   margin-bottom: 20px;
 }
 
@@ -207,14 +199,12 @@ h1 {
 }
 
 .view-toggle button.active {
-  background: #2563eb;
+  background: #2563eb;      /* fundal albastru când e activ butonul respectiv */
   color: white;
   border-color: #1d4ed8;
 }
 
-/* =============================
-   Task Form (Add / Edit)
-============================= */
+/* Task Form (Add / Edit) */
 
 .task-form {
   background: #fff;
@@ -278,9 +268,7 @@ h1 {
   background: #d1d5db;
 }
 
-/* =============================
-   Task List & Items
-============================= */
+/* Task List & items */
 
 .task-list {
   list-style: none;
@@ -294,12 +282,12 @@ h1 {
   padding: 15px 20px;
   text-align: left;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-  border-left: 8px solid #2563eb;
+  border-left: 8px solid #2563eb;     /* bordura din stânga colorată cu culoarea task-ului */
   transition: transform 0.1s ease-in-out;
 }
 
 .task-item:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px);    /* efect mic de ridicare cand se trece peste task */
 }
 
 .task-main {
@@ -308,7 +296,7 @@ h1 {
 
 .title-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between;     /* titlu la stânga, badge la dreapta */
   align-items: center;
 }
 
@@ -328,11 +316,11 @@ h1 {
   color: #555;
   margin: 6px 0;
 }
+
 .task-item .desc {
   display: block;
   width: 100%;
 }
-
 
 .meta {
   font-size: 13px;
@@ -371,9 +359,7 @@ h1 {
   background: #ef4444;
 }
 
-/* =============================
-   Empty List Message
-============================= */
+/* Mesaj când nu sunt taskuri */
 
 .empty {
   color: #666;
@@ -381,9 +367,7 @@ h1 {
   margin-top: 10px;
 }
 
-/* =============================
-   Calendar View
-============================= */
+/* Calendar View (pagina calndar) */
 
 .calendar-view {
   background: #fff;
@@ -426,13 +410,16 @@ h1 {
 .task-list-day li small {
   color: #555;
 }
+
+/* !!! bulina din calendar !!! */
 .task-dot {
   width: 6px;
   height: 6px;
   border-radius: 999px;
-  background: #2563eb;
+  background: #2563eb;        
   margin: 2px auto 0;
 }
+
 .filters {
   display: flex;
   gap: 12px;
@@ -448,6 +435,7 @@ h1 {
   font-size: 14px;
 }
 
+/* FORM LOGIN / REGISTER */
 .auth-container {
   max-width: 350px;
   margin: 80px auto;
@@ -488,7 +476,7 @@ h1 {
   cursor: pointer;
 }
 
-/*sidebar*/
+/* sidebar + buton meniu */
 .menu-btn {
   font-size: 24px;
   background: none;
@@ -505,7 +493,7 @@ h1 {
   background: var(--top-bar-bg, #f0f0f0);
 }
 
-/* pt afisare parola*/
+/* !!!! SHOW / HIDE PASSWORD !!!! */
 
 .password-field {
   position: relative;
@@ -517,7 +505,7 @@ h1 {
 
 .password-field input {
   width: 100%;
-  padding: 16px 70px 16px 12px; /* sau ce înălțime vrei */
+  padding: 16px 70px 16px 12px;         /* loc pentru butonul de "show" */
   border: 1px solid #948979;
   border-radius: 6px;
   font-size: 16px;
@@ -528,8 +516,7 @@ h1 {
 
 .password-field button {
   position: absolute;
-  right: 8px;
-  /* Șterge top și transform */
+  right: 8px;                         /* poziție la dreapta */
   background: #f0f0f0;
   border: 1px solid #948979;
   border-radius: 4px;
@@ -537,7 +524,7 @@ h1 {
   font-size: 14px;
   cursor: pointer;
   color: #393E46;
-  height: auto; /* lasă butonul să-și determine propria înălțime */
+  height: auto;     /* lasă butonul să-și determine propria înălțime */
 }
 
 
@@ -547,9 +534,8 @@ body.dark .password-field input {
   border: 1px solid #30363d;
 }
 
-
 .toggle-pass:hover {
-  color: #2563eb; /* hover vizibil, dar subtil */
+  color: #2563eb; 
 }
 
 body.dark .toggle-pass {
@@ -557,5 +543,5 @@ body.dark .toggle-pass {
 }
 
 body.dark .toggle-pass:hover {
-  color: #60a5fa; /* hover vizibil în dark mode */
+  color: #60a5fa;           /* hover vizibil în dark mode */
 }

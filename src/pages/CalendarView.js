@@ -56,7 +56,8 @@ export default function CalendarView({ tasks }) {
               <li
                 key={t.id}
                 style={{
-                  borderLeft: '6px solid ${t.color}',
+                  borderLeft: `6px solid ${t.color}`,
+
                   marginBottom: 8,
                   paddingLeft: 8,
                 }}

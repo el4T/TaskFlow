@@ -1,27 +1,29 @@
 // src/pages/Login.js
 import React, { useState } from "react";
-import { loadUsers, loginUser } from "../utils/auth";
+import { loginUser } from "../utils/auth";
 
 export default function Login({ onLoginSuccess, onSwitchToRegister }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    const users = loadUsers();
-    const found = users.find(
-      (u) => u.email === email && u.password === password
-    );
+    // MODIFICARE AICI: Folosim Firebase Authentication
+    const result = await loginUser(email, password);
 
-    if (!found) {
-      alert("Email sau parolă incorectă!");
-      return;
+    if (result.success) {
+      onLoginSuccess(result.user);
+    } else {
+      setError(result.error);
     }
-
-    loginUser(found);
-    onLoginSuccess(found);
+    
+    setLoading(false);
   };
 
   return (
@@ -37,7 +39,6 @@ export default function Login({ onLoginSuccess, onSwitchToRegister }) {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        {/* PAROLĂ CU ARATĂ/ASCUNDE */}
         <div className="password-field">
           <input
             type={showPassword ? "text" : "password"}
@@ -55,7 +56,11 @@ export default function Login({ onLoginSuccess, onSwitchToRegister }) {
           </button>
         </div>
 
-        <button type="submit">Login</button>
+        {error && <p style={{ color: "crimson" }}>{error}</p>}
+
+        <button type="submit" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
       </form>
 
       <p>
